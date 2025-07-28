@@ -1,6 +1,5 @@
-const paginate = async (req, res, next) => {
+const paginate = async (req, res, next, limit = 5, page = 1) => {
   try {
-    let { limit = 5, page = 1 } = req.query;
     limit = parseInt(limit);
     page = parseInt(page);
     const result = req.result;

@@ -6,5 +6,8 @@ const router = express.Router();
 
 router.get("/clientes", ClienteController.listarClientes, paginate);
 router.get("/clientes/:id", ClienteController.buscarClientePorId);
+router.post("/clientes", ClienteController.registrarCliente)
+router.put("/clientes/:id", ClienteController.atualizarCliente)
+router.delete("/clientes/:id", ClienteController.deletarCliente)
 
 export default router;

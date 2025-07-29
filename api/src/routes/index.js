@@ -1,7 +1,9 @@
 import express from "express";
 import clientes from "./clientesRoutes.js";
+import contas from "./contasRoutes.js";
+import credenciais from "./credenciaisRoutes.js";
 
-const allRoutes = [clientes];
+const allRoutes = [clientes, contas, credenciais];
 
 const routes = (app) => {
   app.route("/").get((req, res) => {

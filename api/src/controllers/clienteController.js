@@ -6,7 +6,7 @@ class ClienteController {
 
   static listarClientes = async (req, res, next) => {
     try {
-      const {limit, page, ...query} = req.query
+      const {limit, page,...query} = req.query
       const listaClientes = await clientes.find(query);
       req.result = listaClientes;
       paginate(req, res, next, limit, page);
@@ -17,9 +17,10 @@ class ClienteController {
 
   static buscarClientePorId = async (req, res, next) => {
     try {
-      const cliente = await clientes.findById(req.params.id);
+      const id = req.params.id
+      const cliente = await clientes.findById(id);
       if (!cliente) {
-        next(new NotFoundError(`Cliente com id ${req.params.id} não encontrado.`));
+        next(new NotFoundError(`Cliente com id ${id} não encontrado.`));
       }
       res.status(200).json(cliente);
     } catch (error) {
@@ -41,7 +42,10 @@ class ClienteController {
   static atualizarCliente = async (req, res, next) => {
     try {
       const id = req.params.id;
-      await clientes.findByIdAndUpdate(id, req.query);
+      const clienteAtualizado = await clientes.findByIdAndUpdate(id, req.query);
+      if(!clienteAtualizado){
+        next(new NotFoundError(`Cliente com id ${id} não encontrado.`))
+      }
 
       res.status(200).json({message: `Dados do cliente com id ${id} atualizados com sucesso.`})
     }catch(erro){
@@ -52,7 +56,10 @@ class ClienteController {
   static deletarCliente = async (req, res, next) => {
     try {
       const id = req.params.id;
-      await clientes.findByIdAndDelete(id);
+      const clienteAtualizado = await clientes.findByIdAndDelete(id, req.query);
+      if(!clienteAtualizado){
+        next(new NotFoundError(`Cliente com id ${id} não encontrado.`))
+      }
 
       res.status(200).json({message: `Dados do cliente com id ${id} atualizados com sucesso.`})
     }catch(erro){

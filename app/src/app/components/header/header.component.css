@@ -1,0 +1,21 @@
+.header {
+    margin: 0;
+    height: 10vh;
+    background-color: #FFF200;
+    display: flex;
+    align-items: center;
+}
+
+.logo  {
+    height: 100%;
+    margin-left: 1%;
+}
+
+.name {
+    margin-left: 0.5%;
+}
+
+.login-button {
+    font-size: large;
+    margin-right: 0.5%;
+}

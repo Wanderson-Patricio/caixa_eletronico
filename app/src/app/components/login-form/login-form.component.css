@@ -1,0 +1,61 @@
+.login-container {
+  background-color: rgba(255, 242, 0, 0.8);
+  padding: 30px;
+  border-radius: 8%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.login-container label {
+  display: block;
+  margin-bottom: 5px;
+}
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.login-container input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: larger;
+}
+
+.hover {
+  background: #0078d7;
+}
+
+.hover:hover {
+  background: #005fa3;
+}
+
+.revelar-senha {
+  display: flex;
+  margin: 5px;
+}
+
+.revelar-senha p {
+  margin-left: 4px;
+}
+
+.register {
+  font-size: larger;
+  margin-top: 2%;
+  width: 100%;
+  padding: 10px;
+  border: none;
+}

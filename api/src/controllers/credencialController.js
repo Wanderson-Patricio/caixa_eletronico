@@ -1,6 +1,8 @@
 import NotFoundError from "../errors/notFoundError.js";
 import credenciais from "../models/credenciais.js";
 import paginate from "../middlewares/paginate.js";
+import generateHash from "../utils/generateHash.js";
+import getPasswordHashPorClienteId from "../utils/getPasswordHashPorClienteId.js";
 
 class CredencialController {
   static listarCredenciais = async (req, res, next) => {
@@ -42,16 +44,17 @@ class CredencialController {
   static atualizarCredencial = async (req, res, next) => {
     try {
       const id = req.params.id;
-      const credencialAtualizado = await credenciais.findByIdAndUpdate(id, req.query);
+      const credencialAtualizado = await credenciais.findByIdAndUpdate(
+        id,
+        req.query
+      );
       if (!credencialAtualizado) {
         next(new NotFoundError(`credencial com id ${id} não encontrado.`));
       }
 
-      res
-        .status(200)
-        .json({
-          message: `Dados do credencial com id ${id} atualizados com sucesso.`,
-        });
+      res.status(200).json({
+        message: `Dados do credencial com id ${id} atualizados com sucesso.`,
+      });
     } catch (erro) {
       next(erro);
     }
@@ -60,16 +63,31 @@ class CredencialController {
   static deletarCredencial = async (req, res, next) => {
     try {
       const id = req.params.id;
-      const credencialAtualizado = await credenciais.findByIdAndDelete(id, req.query);
+      const credencialAtualizado = await credenciais.findByIdAndDelete(
+        id,
+        req.query
+      );
       if (!credencialAtualizado) {
         next(new NotFoundError(`credencial com id ${id} não encontrado.`));
       }
 
-      res
-        .status(200)
-        .json({
-          message: `Dados do credencial com id ${id} atualizados com sucesso.`,
-        });
+      res.status(200).json({
+        message: `Dados do credencial com id ${id} atualizados com sucesso.`,
+      });
+    } catch (erro) {
+      next(erro);
+    }
+  };
+
+  static verificarCredencial = async (req, res, next) => {
+    try {
+      const { clienteId, password } = req.query;
+      const tryPasswordHash = generateHash(password);
+      const passwordHash = await getPasswordHashPorClienteId(clienteId);
+      // console.log(tryPasswordHash, passwordHash)
+      res.status(200).json({
+        verifyPassword: tryPasswordHash === passwordHash
+      });
     } catch (erro) {
       next(erro);
     }

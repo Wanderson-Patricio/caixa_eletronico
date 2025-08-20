@@ -1,0 +1,32 @@
+<div class="login-container ff-inter">
+  <h2 class="ff-inter">Login</h2>
+  <form action="/login" method="post">
+    <label for="account">Número da Conta:</label>
+    <input
+      type="text"
+      id="account"
+      name="account"
+      placeholder="00000-0"
+      [(ngModel)]="credencial.conta"
+    />
+
+    <label for="password">Senha:</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      placeholder="Digite sua senha"
+      [(ngModel)]="credencial.senha"
+      required
+    />
+    <input
+      (click)="login()"
+      class="button ff-inter hover"
+      type="submit"
+      value="Entrar"
+    />
+  </form>
+  <button (click)="goToRegister()" class="button ff-inter register hover">
+    Cadastre-se
+  </button>
+</div>

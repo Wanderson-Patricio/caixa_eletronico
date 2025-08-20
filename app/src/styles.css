@@ -44,7 +44,7 @@ h2 {
 }
 
 .button:hover {
-  transform: scale(0.98);
+  transform: scale(0.99);
   cursor: pointer;
 }
 

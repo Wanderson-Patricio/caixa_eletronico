@@ -1,8 +1,5 @@
 *env
 *package-lock.json
 *node_modules
-api/src/middlewares/checkAccess.js
-api/src/utils/base64Encoder.js
 api/src/utils/getPasswordHashPorClienteId.js
-api/src/errors/unauthorizedError.js
 app/.vscode

@@ -1,8 +1,12 @@
 import NotFoundError from "../errors/notFoundError.js";
+import UnauthorizedError from "../errors/unauthorizedError.js";
 import credenciais from "../models/credenciais.js";
+import contas from "../models/contas.js";
+import clientes from "../models/clientes.js";
 import paginate from "../middlewares/paginate.js";
 import generateHash from "../utils/generateHash.js";
-import getPasswordHashPorClienteId from "../utils/getPasswordHashPorClienteId.js";
+import getPasswordHashPorNumeroConta from "../utils/getPasswordHashPorNumeroConta.js";
+import { generateToken } from "../middlewares/tokenAuthentication.js";
 
 class CredencialController {
   static listarCredenciais = async (req, res, next) => {
@@ -79,14 +83,42 @@ class CredencialController {
     }
   };
 
+  static gerarToken = async (req, res, next) => {
+    try {
+      res.status(200).json({ token: generateToken(req.body) });
+    } catch (erro) {
+      next(erro);
+    }
+  };
+
   static verificarCredencial = async (req, res, next) => {
     try {
-      const { clienteId, password } = req.query;
-      const tryPasswordHash = generateHash(password);
-      const passwordHash = await getPasswordHashPorClienteId(clienteId);
-      // console.log(tryPasswordHash, passwordHash)
+      const { iat, exp, ...data } = req.userData;
+      const { numeroConta, senha } = data;
+      const tryPasswordHash = generateHash(senha);
+      const passwordHash = await getPasswordHashPorNumeroConta(numeroConta);
+      if (tryPasswordHash !== passwordHash) {
+        throw new UnauthorizedError("/credenciais/verificar");
+      }
+
+      const conta = await contas.findOne({numeroConta: numeroConta})
+      const cliente = await clientes.findById(conta.clienteId)
+
       res.status(200).json({
-        verifyPassword: tryPasswordHash === passwordHash
+        info: {
+          conta: {
+            _id: conta._id,
+            numeroConta: numeroConta,
+            tipoConta: conta.tipoConta
+          },
+          cliente: {
+            _id: cliente._id,
+            nome: cliente.nome
+          }
+        },
+        acesso: {
+          datetime: Date.now(),
+        },
       });
     } catch (erro) {
       next(erro);

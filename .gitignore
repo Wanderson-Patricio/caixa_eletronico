@@ -2,4 +2,5 @@
 *package-lock.json
 *node_modules
 api/src/utils/getPasswordHashPorClienteId.js
+api/connection.py
 app/.vscode

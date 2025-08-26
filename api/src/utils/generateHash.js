@@ -19,7 +19,7 @@ const allCharacters = () => {
 };
 
 const generateHash = (str) => {
-  const hashDivisor = 13 || process.env.HASH_DIVISOR;
+  const hashDivisor = process.env.HASH_DIVISOR;
   let passwordHash = "";
   const characters = allCharacters();
   const charactersLength = characters.length;

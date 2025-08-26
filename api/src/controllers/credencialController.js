@@ -41,7 +41,7 @@ class CredencialController {
       const { id } = req.params;
       const verify = await verifyId(id, req);
       if (!verify) {
-        next(new UnauthorizedError("/credenciais"));
+        next(new UnauthorizedError(`/credenciais/${id}`));
       } else {
         const credencial = await credenciais.findById(id);
         if (!credencial) {

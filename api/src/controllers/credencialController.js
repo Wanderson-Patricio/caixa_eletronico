@@ -41,7 +41,7 @@ class CredencialController {
       const { id } = req.params;
       const verify = await verifyId(id, req);
       if (!verify) {
-        next(new UnauthorizedError(`/credenciais/${id}`));
+        next(new UnauthorizedError(`GET /credenciais/${id}`));
       } else {
         const credencial = await credenciais.findById(id);
         if (!credencial) {
@@ -79,7 +79,7 @@ class CredencialController {
       const { id } = req.params;
       const verify = await verifyId(id, req);
       if (!verify) {
-        next(new UnauthorizedError("/credenciais"));
+        next(new UnauthorizedError(`PUT /credenciais/${id}`));
       } else {
         const credencialAtualizado = await credenciais.findByIdAndUpdate(
           id,
@@ -103,7 +103,7 @@ class CredencialController {
       const { id } = req.params;
       const verify = await verifyId(id, req);
       if (!verify) {
-        next(new UnauthorizedError("/credenciais"));
+        next(new UnauthorizedError(`DELETE /credenciais/${id}`));
       } else {
         const credencialDeletada = await credenciais.findByIdAndDelete(id);
         if (!credencialDeletada) {

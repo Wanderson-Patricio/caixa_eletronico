@@ -4,7 +4,7 @@ import paginate from "../middlewares/paginate.js";
 
 const router = express.Router();
 
-router.get("/transacoes", TransacaoController.listarTransacoes, paginate);
+// router.get("/transacoes", TransacaoController.listarTransacoes, paginate);
 router.get("/transacoes/:id", TransacaoController.buscarTransacaoPorId);
 router.post("/transacoes", TransacaoController.registrarTransacao)
 router.put("/transacoes/:id", TransacaoController.atualizarTransacao)

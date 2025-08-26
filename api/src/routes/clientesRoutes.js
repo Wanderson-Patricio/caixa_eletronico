@@ -4,7 +4,7 @@ import paginate from "../middlewares/paginate.js";
 
 const router = express.Router();
 
-router.get("/clientes", ClienteController.listarClientes, paginate);
+// router.get("/clientes", ClienteController.listarClientes, paginate);
 router.get("/clientes/:id", ClienteController.buscarClientePorId);
 router.post("/clientes", ClienteController.registrarCliente)
 router.put("/clientes/:id", ClienteController.atualizarCliente)

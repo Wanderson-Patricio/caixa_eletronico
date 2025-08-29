@@ -4,6 +4,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
+    "build": "docker build -t caixa-eletronico-api:1.0.0 .",
+    "docker-dev": "docker run -d --name caixa-eletronico-mongo mongo:latest && docker run --env-file .env.test -p 3000:3000 caixa-eletronico-api:1.0.0",
     "dev": "nodemon server.js",
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"

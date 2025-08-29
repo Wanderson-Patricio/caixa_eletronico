@@ -3,8 +3,9 @@ import clientes from "./clientesRoutes.js";
 import contas from "./contasRoutes.js";
 import credenciais from "./credenciaisRoutes.js";
 import transacoes from "./transacoesRoutes.js";
+import autenticacao from "./authenticationRoutes.js"
 
-const allRoutes = [clientes, contas, credenciais, transacoes];
+const allRoutes = [clientes, contas, credenciais, transacoes, autenticacao];
 
 const routes = (app) => {
   app.route("/").get((req, res) => {

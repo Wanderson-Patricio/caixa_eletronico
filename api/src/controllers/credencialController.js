@@ -2,29 +2,27 @@ import NotFoundError from "../errors/notFoundError.js";
 import UnauthorizedError from "../errors/unauthorizedError.js";
 import credenciais from "../models/credenciais.js";
 import contas from "../models/contas.js";
-import clientes from "../models/clientes.js";
 import paginate from "../middlewares/paginate.js";
 import generateHash from "../utils/generateHash.js";
-import getPasswordHashPorNumeroConta from "../utils/getPasswordHashPorNumeroConta.js";
-import { generateToken } from "../middlewares/tokenAuthentication.js";
 
 import mongoose from "mongoose";
 
-const verifyId = async (intendedId, req) => {
-  const conta = await contas.findOne({ numeroConta: req.userData.numeroConta });
-  if (!conta) {
-    return false;
-  }
-
-  const credencial = await credenciais.findById(intendedId);
-  if (!credencial) {
-    return false;
-  }
-
-  return conta._id.equals(credencial.contaId);
-};
-
 class CredencialController {
+  static verifyId = async (intendedId, req) => {
+    const numeroConta = req.userData.info.conta.numeroConta;
+    const conta = await contas.findOne({ numeroConta: numeroConta });
+    if (!conta) {
+      return false;
+    }
+
+    const credencial = await credenciais.findById(intendedId);
+    if (!credencial) {
+      return false;
+    }
+
+    return conta._id.equals(credencial.contaId);
+  };
+
   static listarCredenciais = async (req, res, next) => {
     try {
       const { limit, page, ...query } = req.query;
@@ -39,7 +37,7 @@ class CredencialController {
   static buscarCredencialPorId = async (req, res, next) => {
     try {
       const { id } = req.params;
-      const verify = await verifyId(id, req);
+      const verify = await CredencialController.verifyId(id, req);
       if (!verify) {
         next(new UnauthorizedError(`GET /credenciais/${id}`));
       } else {
@@ -62,7 +60,7 @@ class CredencialController {
         contaId: new mongoose.Types.ObjectId(contaId),
         senhaHash: generateHash(senha),
         tentativasFalhas: 0,
-        ultimoLogin: Date.now().toString()
+        ultimoLogin: Date.now().toString(),
       };
 
       const novoCredencial = new credenciais(dados);
@@ -77,7 +75,7 @@ class CredencialController {
   static atualizarCredencial = async (req, res, next) => {
     try {
       const { id } = req.params;
-      const verify = await verifyId(id, req);
+      const verify = await CredencialController.verifyId(id, req);
       if (!verify) {
         next(new UnauthorizedError(`PUT /credenciais/${id}`));
       } else {
@@ -90,7 +88,7 @@ class CredencialController {
         }
 
         res.status(200).json({
-          message: `Dados do credencial com id ${id} atualizados com sucesso.`
+          message: `Dados do credencial com id ${id} atualizados com sucesso.`,
         });
       }
     } catch (erro) {
@@ -101,7 +99,7 @@ class CredencialController {
   static deletarCredencial = async (req, res, next) => {
     try {
       const { id } = req.params;
-      const verify = await verifyId(id, req);
+      const verify = await CredencialController.verifyId(id, req);
       if (!verify) {
         next(new UnauthorizedError(`DELETE /credenciais/${id}`));
       } else {
@@ -114,48 +112,6 @@ class CredencialController {
           });
         }
       }
-    } catch (erro) {
-      next(erro);
-    }
-  };
-
-  static gerarToken = async (req, res, next) => {
-    try {
-      res.status(200).json({ token: generateToken(req.body) });
-    } catch (erro) {
-      next(erro);
-    }
-  };
-
-  static verificarCredencial = async (req, res, next) => {
-    try {
-      const { numeroConta } = req.userData;
-      const { senha } = req.body;
-      const tryPasswordHash = generateHash(senha);
-      const passwordHash = await getPasswordHashPorNumeroConta(numeroConta);
-      if (tryPasswordHash !== passwordHash) {
-        throw new UnauthorizedError("/credenciais/verificar");
-      }
-
-      const conta = await contas.findOne({ numeroConta: numeroConta });
-      const cliente = await clientes.findById(conta.clienteId);
-
-      res.status(200).json({
-        info: {
-          conta: {
-            _id: conta._id,
-            numeroConta: numeroConta,
-            tipoConta: conta.tipoConta,
-          },
-          cliente: {
-            _id: cliente._id,
-            nome: cliente.nome,
-          },
-        },
-        acesso: {
-          datetime: Date.now(),
-        },
-      });
     } catch (erro) {
       next(erro);
     }

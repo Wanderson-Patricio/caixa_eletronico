@@ -6,16 +6,19 @@ import getNumeroConta from "../utils/getNumeroConta.js";
 
 import mongoose from "mongoose";
 
-const verifyId = async (intendedId, req) => {
-  const conta = await contas.findOne({ numeroConta: req.userData.numeroConta });
-  if (!conta) {
-    return false;
-  }
-
-  return conta._id.equals(new mongoose.Types.ObjectId(intendedId));
-};
-
 class ContaController {
+  static verifyId = async (intendedId, req) => {
+    const numeroConta = req.userData.info.conta.numeroConta;
+    const conta = await contas.findOne({
+      numeroConta: numeroConta,
+    });
+    if (!conta) {
+      return false;
+    }
+
+    return conta._id.equals(new mongoose.Types.ObjectId(intendedId));
+  };
+
   static listarContas = async (req, res, next) => {
     try {
       const { limit, page, ...query } = req.query;
@@ -30,7 +33,7 @@ class ContaController {
   static buscarContaPorId = async (req, res, next) => {
     try {
       const { id } = req.params;
-      const verify = await verifyId(id, req);
+      const verify = await ContaController.verifyId(id, req);
       if (!verify) {
         next(new UnauthorizedError(`GET /contas/${id}`));
       } else {
@@ -70,7 +73,7 @@ class ContaController {
   static atualizarConta = async (req, res, next) => {
     try {
       const { id } = req.params;
-      const verify = await verifyId(id, req);
+      const verify = await ContaController.verifyId(id, req);
       if (!verify) {
         next(new UnauthorizedError(`PUT /contas/${id}`));
       } else {
@@ -91,7 +94,7 @@ class ContaController {
   static deletarConta = async (req, res, next) => {
     try {
       const { id } = req.params;
-      const verify = await verifyId(id, req);
+      const verify = await ContaController.verifyId(id, req);
       if (!verify) {
         next(new UnauthorizedError(`DELETE /contas/${id}`));
       } else {

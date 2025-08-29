@@ -1,8 +1,14 @@
 import NotFoundError from "../errors/notFoundError.js";
+import UnauthorizedError from "../errors/unauthorizedError.js";
 import clientes from "../models/clientes.js";
 import paginate from "../middlewares/paginate.js";
 
 class ClienteController {
+  static verifyId = (intendedId, req) => {
+    const clienteId = req.userData.info.cliente._id;
+    return clienteId === intendedId;
+  };
+
   static listarClientes = async (req, res, next) => {
     try {
       const { limit, page, ...query } = req.query;
@@ -16,12 +22,17 @@ class ClienteController {
 
   static buscarClientePorId = async (req, res, next) => {
     try {
-      const id = req.params.id;
-      const cliente = await clientes.findById(id);
-      if (!cliente) {
-        next(new NotFoundError(`Cliente com id ${id} não encontrado.`));
+      const { id } = req.params;
+      const verify = ClienteController.verifyId(id, req);
+      if (!verify) {
+        next(new UnauthorizedError(`GET /clientes/${id}`));
       } else {
-        res.status(200).json(cliente);
+        const cliente = await clientes.findById(id);
+        if (!cliente) {
+          next(new NotFoundError(`cliente com id ${id} não encontrado.`));
+        } else {
+          res.status(200).json(cliente);
+        }
       }
     } catch (error) {
       next(error);
@@ -47,11 +58,9 @@ class ClienteController {
         next(new NotFoundError(`Cliente com id ${id} não encontrado.`));
       }
 
-      res
-        .status(200)
-        .json({
-          message: `Dados do cliente com id ${id} atualizados com sucesso.`,
-        });
+      res.status(200).json({
+        message: `Dados do cliente com id ${id} atualizados com sucesso.`,
+      });
     } catch (erro) {
       next(erro);
     }
@@ -65,11 +74,9 @@ class ClienteController {
         next(new NotFoundError(`Cliente com id ${id} não encontrado.`));
       }
 
-      res
-        .status(200)
-        .json({
-          message: `Dados do cliente com id ${id} atualizados com sucesso.`,
-        });
+      res.status(200).json({
+        message: `Dados do cliente com id ${id} atualizados com sucesso.`,
+      });
     } catch (erro) {
       next(erro);
     }

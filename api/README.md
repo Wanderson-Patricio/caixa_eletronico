@@ -4,7 +4,6 @@ Generated on: 26/08/2025, 14:59:34
 Root path: `/home/wsl/portifolio/github/caixa_eletronico/api`
 
 ```
-├── 📁 node_modules/ 🚫 (auto-hidden)
 ├── 📁 src/
 │   ├── 📁 config/
 │   │   └── 📄 dbConnect.js
@@ -41,10 +40,7 @@ Root path: `/home/wsl/portifolio/github/caixa_eletronico/api`
 │   │   ├── 📄 getPasswordHashPorNumeroConta.js
 │   │   └── 📄 validateCpf.js
 │   └── 📄 app.js
-├── 🔒 .env 🚫 (auto-hidden)
 ├── 🐳 Dockerfile
-├── 🐍 connection.py
-├── 📄 package-lock.json 🚫 (auto-hidden)
 ├── 📄 package.json
 └── 📄 server.js
 ```

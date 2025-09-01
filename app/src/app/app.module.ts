@@ -5,9 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { KeyboardComponent } from './components/keyboard/keyboard.component';
+import { KeyboardComponent } from './components/tela/keyboard/keyboard.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { FormsModule } from '@angular/forms';
+import { ListaTransacoesComponent } from './components/tela/lista-transacoes/lista-transacoes.component';
+import { TelaComponent } from './components/tela/tela/tela.component';
+import { TransacaoComponent } from './components/tela/transacao/transacao.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +18,10 @@ import { FormsModule } from '@angular/forms';
     HeaderComponent,
     FooterComponent,
     KeyboardComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    ListaTransacoesComponent,
+    TelaComponent,
+    TransacaoComponent
   ],
   imports: [
     BrowserModule,

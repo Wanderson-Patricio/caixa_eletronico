@@ -1,61 +1,85 @@
-.login-container {
-  background-color: rgba(255, 242, 0, 0.8);
-  padding: 30px;
-  border-radius: 8%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.login-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.login-container label {
+/* From Uiverse.io by nathann09 */
+.form {
+  background-color: #fff200;
   display: block;
-  margin-bottom: 5px;
+  padding: 1rem;
+  width: 40rem;
+  aspect-ratio: 3/2;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
-.login-container input[type="text"],
-.login-container input[type="password"] {
+
+.form-title {
+  margin-top: 20px;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  font-size: 3rem;
+  text-align: center;
+  color: #000;
+}
+
+.input-container {
+  margin: 20px 0 0 0;
+  position: relative;
+}
+
+.input-container input,
+.form button {
+  outline: none;
+  border: 1px solid #e5e7eb;
+  margin: 8px 0;
+}
+
+.input-container input {
+  background-color: #fff;
+  padding: 1rem;
+  padding-right: 3rem;
+  font-size: 1.875rem;
+  line-height: 1.25rem;
+  width: 90%;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.button-div{
+  margin-top: 2rem;
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-.login-container input[type="submit"] {
-  width: 100%;
-  padding: 10px;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: larger;
-}
-
-.hover {
-  background: #0078d7;
-}
-
-.hover:hover {
-  background: #005fa3;
-}
-
-.revelar-senha {
   display: flex;
-  margin: 5px;
+  align-items: center;
+  justify-content: center;
 }
 
-.revelar-senha p {
-  margin-left: 4px;
+.submit {
+  display: block;
+  margin-top: 4rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  background-color: #4f46e5;
+  color: #ffffff;
+  font-size: 2rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  width: 50%;
+  border-radius: 0.5rem;
 }
 
-.register {
-  font-size: larger;
-  margin-top: 2%;
-  width: 100%;
-  padding: 10px;
-  border: none;
+.submit:hover {
+  cursor: pointer;
+}
+
+.signup-link {
+  color: #6b7280;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-size: 2rem;
+  text-align: center;
+   margin-top: 40px;
+}
+
+.signup-link a {
+  text-decoration: underline;
 }

@@ -1,0 +1,16 @@
+<div class="transacao-container ff-inter">
+  <div class="tipo rem-15" [ngClass]="corValor()">
+    <p>{{ transacao.tipoTransacao }}</p>
+  </div>
+  <div class="valor" [ngClass]="corValor()">
+    <p>{{ transacao.valor | currency : "BRL" }}</p>
+  </div>
+  <div class="data rem-15">
+    <p>
+      {{ transacao.dataTransacao }}
+    </p>
+  </div>
+  <div class="status rem-15" [ngClass]="corStatus()">
+    <p>{{ transacao.status }}</p>
+  </div>
+</div>

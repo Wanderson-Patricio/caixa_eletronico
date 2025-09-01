@@ -1,0 +1,36 @@
+.transacao-container {
+  border: 1px solid black;
+  margin-bottom: 1px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.rem-15 {
+    font-size:1.5rem;
+}
+
+.tipo {
+  grid-area: 1 / 1 / 2 / 5;
+}
+.valor {
+  grid-area: 2 / 1 / 3 / 5;
+  font-size: 3rem;
+}
+.data {
+  grid-area: 1 / 5 / 2 / 7;
+}
+.status {
+  grid-area: 2 / 5 / 3 / 7;
+}
+
+.color-red{
+  color: red;
+}
+
+.color-green{
+  color: green;
+}
